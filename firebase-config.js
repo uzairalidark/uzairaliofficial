@@ -6,15 +6,15 @@
    Authentication, set up in the Firebase Console).
    ============================================================ */
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY",
-  authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_PROJECT.appspot.com",
-  messagingSenderId: "PASTE_YOUR_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
+  apiKey: "AIzaSyDEVoYqC1mL2Dy4LqIJnFefH07-Q8iwGI8",
+  authDomain: "uzairali-darkcrypto.firebaseapp.com",
+  projectId: "uzairali-darkcrypto",
+  storageBucket: "uzairali-darkcrypto.firebasestorage.app",
+  messagingSenderId: "898463099649",
+  appId: "1:898463099649:web:7b03684286bfed164bc900"
 };
 
 /* Only this email is allowed to publish posts.
    Set this to the email you used when creating your
    Firebase Authentication user. */
-const ADMIN_EMAIL = "PASTE_YOUR_ADMIN_EMAIL@example.com";
+const ADMIN_EMAIL = "PASTE_YOUR_ADMIN_EMAIL_peditor620.gmail.com";
