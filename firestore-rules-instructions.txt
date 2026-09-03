@@ -1,0 +1,37 @@
+HOW TO SET UP FIRESTORE SECURITY RULES
+========================================
+This makes sure ANYONE can read your posts (so the website works
+for all visitors), but ONLY you (logged in via admin.html) can
+publish or delete posts.
+
+STEPS:
+1. Go to your Firebase Console → your project.
+2. Left menu → Firestore Database → click the "Rules" tab.
+3. Delete everything in the box and paste this instead:
+
+-----------------------------------------------------------
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /site/posts {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.auth.token.email == "PASTE_YOUR_ADMIN_EMAIL@example.com";
+    }
+  }
+}
+-----------------------------------------------------------
+
+4. Replace PASTE_YOUR_ADMIN_EMAIL@example.com with the exact
+   email you used to create your Firebase Authentication user
+   (same one you'll type into admin.html to log in).
+5. Click "Publish".
+
+That's it — your posts are now readable by every visitor for
+free, but only your login can add or remove them.
+
+WHERE TO CREATE YOUR ADMIN LOGIN:
+Firebase Console → Authentication → Sign-in method → enable
+"Email/Password" → Users tab → "Add user" → enter your email
+and choose a strong password. Use that same email + password
+to log into admin.html.

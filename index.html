@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uzair Ali | Dark Crypto</title>
+<meta name="description" content="Official hub of Uzair Ali — Dark Crypto. Live prices, daily market updates, and all official links in one place.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E14;
+    --surface:#12161F;
+    --surface-2:#161B26;
+    --line:#232935;
+    --gold:#D4A73A;
+    --green:#3FA76B;
+    --red:#C9483D;
+    --ink:#E8E6DF;
+    --muted:#7A8290;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- layout shell ---------- */
+  .wrap{
+    max-width:560px;
+    margin:0 auto;
+    padding:0 20px 64px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:56px 0 28px;
+    text-align:center;
+  }
+  .avatar{
+    width:84px;height:84px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    background:linear-gradient(155deg,#1B2130,#0E1119);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:26px;
+    color:var(--gold);
+    letter-spacing:0.5px;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:28px;
+    margin:0 0 6px;
+    letter-spacing:-0.2px;
+  }
+  .handle{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--gold);
+    margin:0 0 14px;
+  }
+  .tagline{
+    color:var(--muted);
+    font-size:14.5px;
+    line-height:1.6;
+    max-width:380px;
+    margin:0 auto;
+  }
+  .verified-row{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:16px;
+    padding:6px 12px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    font-size:12px;
+    color:var(--muted);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .verified-row .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 6px var(--green);
+  }
+
+  /* ---------- ticker tape ---------- */
+  .ticker-band{
+    margin:28px -20px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--surface);
+    overflow:hidden;
+    position:relative;
+  }
+  .ticker-track{
+    display:flex;
+    width:max-content;
+    animation:scroll-left 28s linear infinite;
+  }
+  .ticker-track:hover{animation-play-state:paused;}
+  @keyframes scroll-left{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .tick{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 22px;
+    border-right:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    white-space:nowrap;
+  }
+  .tick .sym{color:var(--ink);font-weight:600;}
+  .tick .px{color:var(--muted);}
+  .tick .chg{font-weight:600;}
+  .chg.up{color:var(--green);}
+  .chg.down{color:var(--red);}
+  .ticker-status{
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
+    padding:8px 0 0;
+  }
+
+  /* ---------- section labels ---------- */
+  .section{margin-top:44px;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:16px;
+  }
+  .section-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:15px;
+    font-weight:600;
+    margin:0;
+  }
+  .section-head span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
+  }
+
+  /* ---------- social links ---------- */
+  .links{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .link-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .link-item:hover{
+    border-color:var(--gold);
+    transform:translateX(2px);
+  }
+  .link-icon{
+    width:36px;height:36px;
+    flex:none;
+    border-radius:8px;
+    background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .link-icon svg{width:18px;height:18px;}
+  .link-text{flex:1;min-width:0;}
+  .link-title{font-size:14.5px;font-weight:500;}
+  .link-sub{font-size:12px;color:var(--muted);margin-top:1px;}
+  .link-arrow{color:var(--muted);font-size:16px;}
+
+  /* ---------- updates timeline ---------- */
+  .updates{
+    display:flex;
+    flex-direction:column;
+  }
+  .update{
+    position:relative;
+    padding:0 0 24px 24px;
+    border-left:1px solid var(--line);
+  }
+  .update:last-child{border-color:transparent;padding-bottom:0;}
+  .update::before{
+    content:'';
+    position:absolute;
+    left:-4.5px;top:4px;
+    width:8px;height:8px;
+    border-radius:50%;
+    background:var(--gold);
+  }
+  .update-date{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--gold);
+    margin-bottom:6px;
+  }
+  .update-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    margin-bottom:5px;
+  }
+  .update-body{
+    font-size:13.5px;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .update-tag{
+    display:inline-block;
+    margin-top:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    color:var(--green);
+    border:1px solid rgba(63,167,107,0.35);
+    background:rgba(63,167,107,0.08);
+    padding:2px 8px;
+    border-radius:20px;
+  }
+  .voice-embed{
+    width:100%;
+    height:62px;
+    margin-top:10px;
+    border-radius:8px;
+    border:1px solid var(--line);
+  }
+  .update-link-btn{
+    display:inline-block;
+    margin-top:10px;
+    font-size:12.5px;
+    color:var(--gold);
+    border:1px solid var(--line);
+    padding:6px 12px;
+    border-radius:20px;
+    text-decoration:none;
+  }
+  .update-link-btn:hover{border-color:var(--gold);}
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:52px;
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.8;
+  }
+  .footer-links{
+    margin-top:14px;
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .footer-links a{
+    color:var(--muted);
+    text-decoration:none;
+  }
+  .footer-links a:hover{color:var(--gold);}
+
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
+  }
+
+  /* ---------- radar ---------- */
+  .radar-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .radar-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:10px;
+  }
+  .radar-card.wide{grid-column:1/-1;}
+  .radar-card-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:10px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .live-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--red);
+    box-shadow:0 0 6px var(--red);
+    display:inline-block;
+  }
+  .fng-value{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:30px;
+  }
+  .fng-label{
+    font-size:12px;
+    color:var(--muted);
+    margin:2px 0 10px;
+  }
+  .fng-bar{
+    height:5px;
+    border-radius:3px;
+    background:var(--surface-2);
+    overflow:hidden;
+  }
+  .fng-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--red),var(--gold),var(--green));
+    transition:width .6s ease;
+  }
+  .mover-single{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+  }
+  .mover-single .mv-sym{font-weight:700;font-size:16px;display:block;margin-bottom:4px;font-family:'Space Grotesk',sans-serif;}
+  .mover-single .mv-chg{font-weight:600;}
+
+  .trend-row{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:2px;
+  }
+  .trend-pill{
+    flex:none;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    padding:7px 12px;
+    border-radius:20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    white-space:nowrap;
+  }
+  .trend-pill .rank{color:var(--gold);}
+
+  .liq-feed{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    max-height:190px;
+    overflow-y:auto;
+  }
+  .liq-empty{font-size:12.5px;color:var(--muted);}
+  .liq-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    padding:7px 10px;
+    background:var(--surface-2);
+    border-radius:6px;
+    border-left:2px solid var(--muted);
+  }
+  .liq-row.long{border-left-color:var(--red);}
+  .liq-row.short{border-left-color:var(--green);}
+  .liq-row .liq-side{font-weight:600;}
+  .liq-row.long .liq-side{color:var(--red);}
+  .liq-row.short .liq-side{color:var(--green);}
+  .liq-row .liq-time{color:var(--muted);font-size:10.5px;}
+
+  @media (max-width:420px){
+    .radar-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- new radar widgets ---------- */
+  .cbprem-value{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:26px;
+  }
+  .cbprem-sub{font-size:11.5px;color:var(--muted);margin-top:4px;}
+
+  .stbl-value{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:22px;
+  }
+  .stbl-sub{font-size:11.5px;color:var(--muted);margin-top:4px;}
+
+  .vradar-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:12px;}
+  .vradar-table th{
+    text-align:left;color:var(--muted);font-weight:500;
+    font-size:10.5px;padding:0 6px 8px;border-bottom:1px solid var(--line);
+  }
+  .vradar-table td{padding:8px 6px;border-bottom:1px solid var(--line);}
+  .vradar-table tr:last-child td{border-bottom:none;}
+  .vr-sym{font-weight:700;font-family:'Space Grotesk',sans-serif;}
+  .vr-up{color:var(--green);}
+  .vr-down{color:var(--red);}
+
+  .heatmap-wrap{display:flex;flex-direction:column;gap:3px;}
+  .heat-row{display:flex;align-items:center;gap:8px;}
+  .heat-price{
+    width:76px;flex:none;font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--muted);text-align:right;
+  }
+  .heat-bar-track{flex:1;height:14px;background:var(--surface-2);border-radius:3px;overflow:hidden;}
+  .heat-bar-fill{height:100%;border-radius:3px;transition:width .4s ease;}
+  .heat-bar-fill.long{background:var(--red);}
+  .heat-bar-fill.short{background:var(--green);}
+  .heatmap-empty{font-size:12.5px;color:var(--muted);}
+  .heatmap-note{font-size:10.5px;color:var(--muted);margin-top:10px;}
+
+  .coin-search{
+    width:100%;padding:9px 12px;margin-bottom:10px;
+    background:var(--surface-2);border:1px solid var(--line);border-radius:8px;
+    color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;
+  }
+  .allcoins-scroll{max-height:340px;overflow-y:auto;}
+  #allCoinsTable th{position:sticky;top:0;background:var(--surface);}
+  #allCoinsCount{font-weight:400;color:var(--muted);}
+
+  /* ---------- order flow ---------- */
+  .of-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .of-cell{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:12px;
+  }
+  .of-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);}
+  .of-value{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;margin:5px 0 4px;}
+  .of-formula{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;line-height:1.4;}
+  .of-bar-track{height:16px;border-radius:4px;background:var(--red);overflow:hidden;margin-top:14px;position:relative;}
+  .of-bar-fill{height:100%;background:var(--green);width:50%;transition:width .5s ease;}
+  @media (max-width:420px){
+    .of-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- coin detail modal ---------- */
+  .coin-row{cursor:pointer;}
+  .coin-row:hover{background:var(--surface-2);}
+  .modal-overlay{
+    display:none;
+    position:fixed;inset:0;
+    background:rgba(5,6,9,0.75);
+    z-index:100;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    width:100%;max-width:480px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px 16px 0 0;
+    padding:22px 20px 30px;
+    max-height:85vh;overflow-y:auto;
+  }
+  @media (min-width:540px){
+    .modal-overlay{align-items:center;}
+    .modal-box{border-radius:16px;}
+  }
+  .modal-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .modal-symbol{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;}
+  .modal-name{font-size:12px;color:var(--muted);margin-top:2px;}
+  .modal-close{cursor:pointer;color:var(--muted);font-size:18px;padding:4px;}
+  .modal-price{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:30px;margin-top:16px;}
+  .modal-live-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;margin-top:4px;}
+  .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px;}
+  .modal-cell{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:12px;}
+  .mc-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);}
+  .mc-value{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-top:4px;}
+  .modal-section-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin:22px 0 10px;}
+  .sr-note{color:var(--muted);}
+  .sr-grid{display:flex;flex-direction:column;gap:6px;}
+  .sr-row{
+    display:flex;justify-content:space-between;
+    font-family:'JetBrains Mono',monospace;font-size:13px;
+    padding:8px 12px;background:var(--surface-2);border-radius:6px;
+  }
+  .sr-row.pivot{border:1px solid var(--gold);color:var(--gold);font-weight:600;}
+  .modal-note{font-size:11px;color:var(--muted);margin-top:16px;line-height:1.5;}
+
+  .radar-chart-wrap{display:flex;justify-content:center;padding:10px 0;}
+  .radar-svg{width:220px;height:220px;}
+  .radar-grid-shape{stroke:var(--line);stroke-width:1;}
+  .radar-axis-line{stroke:var(--line);stroke-width:1;}
+  .radar-shape{fill:rgba(212,167,58,0.25);stroke:var(--gold);stroke-width:2;transition:points .5s ease;}
+  .radar-label{fill:var(--muted);font-family:'JetBrains Mono',monospace;font-size:8px;}
+  .radar-legend{
+    display:grid;grid-template-columns:1fr 1fr;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+    margin-bottom:8px;
+  }
+  .radar-legend .rl-val{color:var(--ink);font-weight:600;}
+
+  .ob-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .ob-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;}
+  .ob-table td{padding:4px 4px;}
+  .ob-head{font-family:'JetBrains Mono',monospace;font-size:10.5px;padding:4px 4px 6px;}
+  .ob-bid{color:var(--green);}
+  .ob-ask{color:var(--red);}
+  .ob-price-bid{color:var(--green);}
+  .ob-price-ask{color:var(--red);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="avatar">UA</div>
+    <h1>Uzair Ali</h1>
+    <div class="handle">DARK CRYPTO</div>
+    <p class="tagline">Crypto market updates, trade setups &amp; price action — straight from the channel. This is the one official place to find every link.</p>
+    <div class="verified-row"><span class="dot"></span> Official Hub</div>
+  </div>
+
+  <!-- LIVE PRICE TICKER -->
+  <div class="ticker-band">
+    <div class="ticker-track" id="tickerTrack">
+      <!-- JS fills this twice for seamless loop -->
+    </div>
+  </div>
+  <div class="ticker-status" id="tickerStatus">Loading live prices…</div>
+
+  <!-- MARKET RADAR -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Market Radar</h2>
+      <span id="radarStatus">syncing…</span>
+    </div>
+
+    <div class="radar-grid">
+      <div class="radar-card">
+        <div class="radar-card-label">Fear &amp; Greed</div>
+        <div class="fng-value" id="fngValue">—</div>
+        <div class="fng-label" id="fngLabel">loading</div>
+        <div class="fng-bar"><div class="fng-fill" id="fngFill"></div></div>
+      </div>
+
+      <div class="radar-card">
+        <div class="radar-card-label">Top Mover</div>
+        <div id="topMover" class="mover-single">loading…</div>
+      </div>
+
+      <div class="radar-card">
+        <div class="radar-card-label">Coinbase Premium (BTC)</div>
+        <div class="cbprem-value" id="cbpremValue">—</div>
+        <div class="cbprem-sub" id="cbpremSub">loading…</div>
+      </div>
+
+      <div class="radar-card">
+        <div class="radar-card-label">Stablecoin Mcap (7D)</div>
+        <div class="stbl-value" id="stblValue">—</div>
+        <div class="stbl-sub" id="stblSub">loading…</div>
+      </div>
+    </div>
+
+    <div class="radar-card wide">
+      <div class="radar-card-label">Volume Radar</div>
+      <table class="vradar-table">
+        <thead><tr><th>Coin</th><th>24h Vol</th><th>24h %</th></tr></thead>
+        <tbody id="vradarBody"><tr><td colspan="3">loading…</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="radar-card wide">
+      <div class="radar-card-label">Trending Coins</div>
+      <div class="trend-row" id="trendingRow">loading…</div>
+    </div>
+
+    <div class="radar-card wide">
+      <div class="radar-card-label">All Coins — Market Data <span id="allCoinsCount"></span></div>
+      <input type="text" id="coinSearch" class="coin-search" placeholder="Search coin (e.g. BTC, ETH, PEPE)…">
+      <div class="allcoins-scroll">
+        <table class="vradar-table" id="allCoinsTable">
+          <thead><tr><th>#</th><th>Coin</th><th>Price</th><th>24h %</th><th>Volume</th><th>Mcap</th></tr></thead>
+          <tbody id="allCoinsBody"><tr><td colspan="6">loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="radar-card wide">
+      <div class="radar-card-label">Live Liquidations <span class="live-dot"></span></div>
+      <div class="liq-feed" id="liqFeed">
+        <div class="liq-empty">Connecting to live feed…</div>
+      </div>
+    </div>
+
+    <div class="radar-card wide">
+      <div class="radar-card-label">Liquidation Heatmap (live session) <span class="live-dot"></span></div>
+      <div class="heatmap-wrap" id="heatmapWrap">
+        <div class="heatmap-empty">Building from live liquidations as they happen…</div>
+      </div>
+      <div class="heatmap-note">Builds live from this browsing session only — not historical depth like paid terminals.</div>
+    </div>
+
+    <div class="radar-card wide">
+      <div class="radar-card-label">Order Flow — BTC/USDT <span class="live-dot"></span></div>
+      <div class="of-grid">
+        <div class="of-cell">
+          <div class="of-label">Taker Delta (60s)</div>
+          <div class="of-value" id="ofDelta">—</div>
+          <div class="of-formula">Δ = buy volume − sell volume</div>
+        </div>
+        <div class="of-cell">
+          <div class="of-label">CVD (this session)</div>
+          <div class="of-value" id="ofCvd">—</div>
+          <div class="of-formula">CVD = running total of every trade's Δ</div>
+        </div>
+        <div class="of-cell">
+          <div class="of-label">Order Book Imbalance</div>
+          <div class="of-value" id="ofImbalance">—</div>
+          <div class="of-formula">(bidVol − askVol) / (bidVol + askVol), top 20 levels</div>
+        </div>
+        <div class="of-cell">
+          <div class="of-label">RSI (14, 1m)</div>
+          <div class="of-value" id="ofRsi">—</div>
+          <div class="of-formula">Wilder's RSI = 100 − 100/(1+RS)</div>
+        </div>
+        <div class="of-cell">
+          <div class="of-label">Rolling VWAP (100m)</div>
+          <div class="of-value" id="ofVwap">—</div>
+          <div class="of-formula">Σ(typical price × vol) / Σvol</div>
+        </div>
+        <div class="of-cell">
+          <div class="of-label">Delta Bar</div>
+          <div class="of-bar-track"><div class="of-bar-fill" id="ofDeltaBar"></div></div>
+        </div>
+      </div>
+      <div class="heatmap-note">Raw market data, not a buy/sell signal. Not financial advice — see <a href="terms.html" style="color:var(--muted)">Terms</a>.</div>
+    </div>
+  </div>
+
+  <!-- SOCIAL LINKS -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Official Links</h2>
+      <span>4 platforms</span>
+    </div>
+    <div class="links">
+
+      <a class="link-item" href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M21 4L3 11.5L9.5 13.5M21 4L17.5 20L9.5 13.5M21 4L9.5 13.5" stroke="#D4A73A" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="link-text">
+          <div class="link-title">Telegram Channel</div>
+          <div class="link-sub">Daily updates + price alerts</div>
+        </div>
+        <div class="link-arrow">›</div>
+      </a>
+
+      <a class="link-item" href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6.5 17.5L4 20L4.8 16.2C3.7 14.7 3 12.9 3 11C3 6.6 7 3 12 3C17 3 21 6.6 21 11C21 15.4 17 19 12 19C10.3 19 8.7 18.5 7.4 17.7L6.5 17.5Z" stroke="#D4A73A" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="link-text">
+          <div class="link-title">WhatsApp Community</div>
+          <div class="link-sub">Join the discussion group</div>
+        </div>
+        <div class="link-arrow">›</div>
+      </a>
+
+      <a class="link-item" href="https://youtube.com/@YOUR_YOUTUBE_HANDLE" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="3" stroke="#D4A73A" stroke-width="1.6"/><path d="M10.5 9.5L14.5 12L10.5 14.5V9.5Z" fill="#D4A73A"/></svg>
+        </div>
+        <div class="link-text">
+          <div class="link-title">YouTube Channel</div>
+          <div class="link-sub">Full videos &amp; live sessions</div>
+        </div>
+        <div class="link-arrow">›</div>
+      </a>
+
+      <a class="link-item" href="https://www.tiktok.com/@YOUR_TIKTOK_HANDLE" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M14 3V14.5C14 16.4 12.4 18 10.5 18C8.6 18 7 16.4 7 14.5C7 12.6 8.6 11 10.5 11" stroke="#D4A73A" stroke-width="1.6" stroke-linecap="round"/><path d="M14 3C14 5.2 15.8 7 18 7" stroke="#D4A73A" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="link-text">
+          <div class="link-title">TikTok</div>
+          <div class="link-sub">Short clips &amp; quick calls</div>
+        </div>
+        <div class="link-arrow">›</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- DAILY UPDATES -->
+  <div class="section">
+    <div class="section-head">
+      <h2>Latest Updates</h2>
+      <span id="updateCount">— entries</span>
+    </div>
+    <div class="updates" id="updatesList"></div>
+  </div>
+
+  <footer>
+    UZAIR ALI — DARK CRYPTO<br>
+    Not financial advice. Trade at your own risk.
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- COIN DETAIL MODAL -->
+<div class="modal-overlay" id="coinModalOverlay" onclick="if(event.target===this) closeCoinModal()">
+  <div class="modal-box">
+    <div class="modal-top">
+      <div>
+        <div class="modal-symbol" id="modalSymbol">—</div>
+        <div class="modal-name" id="modalName">—</div>
+      </div>
+      <span class="modal-close" onclick="closeCoinModal()">✕</span>
+    </div>
+
+    <div class="modal-price" id="modalPrice">—</div>
+    <div class="modal-live-tag"><span class="live-dot"></span> <span id="modalLiveStatus">connecting…</span></div>
+
+    <div class="modal-grid">
+      <div class="modal-cell"><div class="mc-label">24h High</div><div class="mc-value" id="modalHigh">—</div></div>
+      <div class="modal-cell"><div class="mc-label">24h Low</div><div class="mc-value" id="modalLow">—</div></div>
+    </div>
+
+    <div class="modal-section-label">Support / Resistance <span class="sr-note">(Classic Pivot Points, from prior day's H/L/C)</span></div>
+    <div class="sr-grid" id="modalSR">
+      <div class="sr-row"><span>R2</span><span id="srR2">—</span></div>
+      <div class="sr-row"><span>R1</span><span id="srR1">—</span></div>
+      <div class="sr-row pivot"><span>Pivot</span><span id="srPivot">—</span></div>
+      <div class="sr-row"><span>S1</span><span id="srS1">—</span></div>
+      <div class="sr-row"><span>S2</span><span id="srS2">—</span></div>
+    </div>
+    <div class="modal-section-label">Market Radar <span class="sr-note">(4 real metrics, formulas shown below)</span></div>
+    <div class="radar-chart-wrap">
+      <svg viewBox="0 0 200 200" id="radarSvg" class="radar-svg">
+        <polygon points="100,20 180,100 100,180 20,100" class="radar-grid-shape" fill="none"/>
+        <polygon points="100,60 140,100 100,140 60,100" class="radar-grid-shape" fill="none"/>
+        <line x1="100" y1="20" x2="100" y2="180" class="radar-axis-line"/>
+        <line x1="20" y1="100" x2="180" y2="100" class="radar-axis-line"/>
+        <polygon id="radarShape" points="100,100 100,100 100,100 100,100" class="radar-shape"/>
+        <text x="100" y="12" class="radar-label" text-anchor="middle">RSI</text>
+        <text x="190" y="103" class="radar-label" text-anchor="start">Taker Buy</text>
+        <text x="100" y="196" class="radar-label" text-anchor="middle">Imbalance</text>
+        <text x="10" y="103" class="radar-label" text-anchor="end">Volatility</text>
+      </svg>
+    </div>
+    <div class="radar-legend" id="radarLegend"></div>
+
+    <div class="modal-section-label">Live Order Book <span class="sr-note">(top 8 levels each side, real-time)</span></div>
+    <div class="ob-grid">
+      <div class="ob-side">
+        <div class="ob-head ob-bid">BIDS</div>
+        <table class="ob-table"><tbody id="obBids"><tr><td colspan="3">loading…</td></tr></tbody></table>
+      </div>
+      <div class="ob-side">
+        <div class="ob-head ob-ask">ASKS</div>
+        <table class="ob-table"><tbody id="obAsks"><tr><td colspan="3">loading…</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <div class="modal-note" id="modalNote"></div>
+  </div>
+</div>
+
+<script type="module">
+/* ============================================================
+   LIVE POSTS — fetched from Firebase (published via admin.html).
+   No file editing needed once Firebase is connected. Falls back
+   to sample posts if firebase-config.js isn't set up yet.
+   ============================================================ */
+const FALLBACK_POSTS = [
+  {
+    date: "02 Sep 2026",
+    title: "Welcome to the official hub",
+    body: "Ye page Dark Crypto ki sari official links aur daily market updates ka ek jaga hai. Telegram channel join karein for real-time price alerts.",
+    tag: "ANNOUNCEMENT"
+  },
+  {
+    date: "01 Sep 2026",
+    title: "Admin panel se posts yahan aayengi",
+    body: "Ye placeholder posts hain. Ek baar Firebase connect ho jaye, admin.html se publish ki gayi posts yahan automatically dikhengi — file edit karne ki zarurat nahi.",
+    tag: "GUIDE"
+  }
+];
+
+function renderPosts(posts){
+  const list = document.getElementById('updatesList');
+  const count = document.getElementById('updateCount');
+  list.innerHTML = posts.map(p => `
+    <div class="update">
+      <div class="update-date">${p.date}</div>
+      <div class="update-title">${p.title}</div>
+      <div class="update-body">${p.body}</div>
+      ${p.voice ? `<iframe src="https://t.me/${p.voice}?embed=1" class="voice-embed" frameborder="0" loading="lazy"></iframe>` : ''}
+      ${p.link ? `<a href="${p.link}" target="_blank" rel="noopener" class="update-link-btn">Open Link →</a>` : ''}
+      ${p.tag ? `<div class="update-tag">${p.tag}</div>` : ''}
+    </div>
+  `).join('');
+  count.textContent = posts.length + ' entries';
+}
+
+async function loadPosts(){
+  try{
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+    const { getFirestore, doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+    const { firebaseConfig } = await import("./firebase-config.js");
+
+    if(firebaseConfig.apiKey.startsWith("PASTE_")) throw new Error("firebase not configured yet");
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const snap = await getDoc(doc(db, "site", "posts"));
+    if(snap.exists() && Array.isArray(snap.data().posts) && snap.data().posts.length){
+      renderPosts(snap.data().posts);
+    }else{
+      renderPosts(FALLBACK_POSTS);
+    }
+  }catch(e){
+    renderPosts(FALLBACK_POSTS);
+  }
+}
+loadPosts();
+
+/* ============================================================
+   LIVE PRICE TICKER — pulls from CoinGecko's free public API
+   (no API key needed). Auto-refreshes every 60 seconds.
+   ============================================================ */
+const COINS = [
+  { id: 'bitcoin', sym: 'BTC' },
+  { id: 'ethereum', sym: 'ETH' },
+  { id: 'binancecoin', sym: 'BNB' },
+  { id: 'solana', sym: 'SOL' },
+  { id: 'ripple', sym: 'XRP' },
+  { id: 'dogecoin', sym: 'DOGE' }
+];
+
+async function loadPrices(){
+  const status = document.getElementById('tickerStatus');
+  try{
+    const ids = COINS.map(c => c.id).join(',');
+    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
+    if(!res.ok) throw new Error('bad response');
+    const data = await res.json();
+
+    const items = COINS.map(c => {
+      const d = data[c.id];
+      if(!d) return null;
+      const price = d.usd;
+      const chg = d.usd_24h_change ?? 0;
+      const up = chg >= 0;
+      const priceStr = price >= 1 ? price.toLocaleString(undefined,{maximumFractionDigits:2}) : price.toPrecision(4);
+      return `<div class="tick"><span class="sym">${c.sym}</span><span class="px">$${priceStr}</span><span class="chg ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%</span></div>`;
+    }).filter(Boolean).join('');
+
+    // duplicate the row for a seamless infinite scroll
+    document.getElementById('tickerTrack').innerHTML = items + items;
+    const now = new Date();
+    status.textContent = 'Live · updated ' + now.toLocaleTimeString();
+  }catch(err){
+    status.textContent = 'Price feed unavailable right now — retrying…';
+  }
+}
+
+loadPrices();
+setInterval(loadPrices, 60000);
+
+/* ============================================================
+   FEAR & GREED INDEX — alternative.me free public API, no key
+   ============================================================ */
+async function loadFearGreed(){
+  try{
+    const res = await fetch('https://api.alternative.me/fng/?limit=1');
+    const json = await res.json();
+    const d = json.data[0];
+    document.getElementById('fngValue').textContent = d.value;
+    document.getElementById('fngLabel').textContent = d.value_classification;
+    document.getElementById('fngFill').style.width = d.value + '%';
+  }catch(e){
+    document.getElementById('fngLabel').textContent = 'unavailable';
+  }
+}
+
+/* ============================================================
+   TRENDING COINS + TOP MOVER — CoinGecko free public API
+   ============================================================ */
+async function loadTrending(){
+  try{
+    const res = await fetch('https://api.coingecko.com/api/v3/search/trending');
+    const json = await res.json();
+    const coins = json.coins.slice(0,7);
+    document.getElementById('trendingRow').innerHTML = coins.map((c,i) =>
+      `<div class="trend-pill"><span class="rank">#${i+1}</span> ${c.item.symbol.toUpperCase()}</div>`
+    ).join('');
+  }catch(e){
+    document.getElementById('trendingRow').textContent = 'Trending data unavailable right now.';
+  }
+}
+
+async function loadTopMover(){
+  try{
+    const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&price_change_percentage=24h');
+    const list = await res.json();
+    const top = list.reduce((a,b) => Math.abs(b.price_change_percentage_24h||0) > Math.abs(a.price_change_percentage_24h||0) ? b : a);
+    const chg = top.price_change_percentage_24h || 0;
+    const up = chg >= 0;
+    document.getElementById('topMover').innerHTML =
+      `<span class="mv-sym">${top.symbol.toUpperCase()}</span><span class="mv-chg" style="color:${up?'var(--green)':'var(--red)'}">${up?'▲':'▼'} ${Math.abs(chg).toFixed(2)}% (24h)</span>`;
+  }catch(e){
+    document.getElementById('topMover').textContent = 'Unavailable right now.';
+  }
+}
+
+loadFearGreed();
+loadTrending();
+loadTopMover();
+setInterval(loadFearGreed, 5*60000);
+setInterval(loadTrending, 5*60000);
+setInterval(loadTopMover, 5*60000);
+
+/* ============================================================
+   COINBASE PREMIUM — Coinbase public price API vs Binance public
+   price API, both free, no key. Premium = how much higher/lower
+   Coinbase's BTC price is vs Binance (a classic US-demand signal).
+   ============================================================ */
+async function loadCoinbasePremium(){
+  try{
+    const [cbRes, bnRes] = await Promise.all([
+      fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot'),
+      fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT')
+    ]);
+    const cb = await cbRes.json();
+    const bn = await bnRes.json();
+    const cbPrice = parseFloat(cb.data.amount);
+    const bnPrice = parseFloat(bn.price);
+    const premPct = ((cbPrice - bnPrice) / bnPrice) * 100;
+    const up = premPct >= 0;
+    document.getElementById('cbpremValue').innerHTML =
+      `<span style="color:${up?'var(--green)':'var(--red)'}">${up?'+':''}${premPct.toFixed(3)}%</span>`;
+    document.getElementById('cbpremSub').textContent =
+      `Coinbase $${cbPrice.toLocaleString()} vs Binance $${bnPrice.toLocaleString()}`;
+  }catch(e){
+    document.getElementById('cbpremSub').textContent = 'Unavailable right now.';
+  }
+}
+
+/* ============================================================
+   STABLECOIN MARKET CAP (7D CHANGE) — DeFiLlama free public API
+   ============================================================ */
+async function loadStablecoinFlow(){
+  try{
+    const res = await fetch('https://stablecoins.llama.fi/stablecoincharts/all');
+    const data = await res.json();
+    if(!Array.isArray(data) || data.length < 8) throw new Error('unexpected shape');
+    const latest = data[data.length - 1];
+    const weekAgo = data[data.length - 8];
+    const latestVal = latest.totalCirculatingUSD?.peggedUSD ?? latest.totalCirculating?.peggedUSD;
+    const weekVal = weekAgo.totalCirculatingUSD?.peggedUSD ?? weekAgo.totalCirculating?.peggedUSD;
+    if(!latestVal || !weekVal) throw new Error('missing values');
+    const diff = latestVal - weekVal;
+    const pct = (diff / weekVal) * 100;
+    const up = diff >= 0;
+    const diffB = (Math.abs(diff)/1e9).toFixed(2);
+    document.getElementById('stblValue').innerHTML =
+      `<span style="color:${up?'var(--green)':'var(--red)'}">${up?'+':'-'}$${diffB}B</span>`;
+    document.getElementById('stblSub').textContent = `${up?'+':''}${pct.toFixed(2)}% over 7 days · total $${(latestVal/1e9).toFixed(1)}B`;
+  }catch(e){
+    document.getElementById('stblSub').textContent = 'Unavailable right now.';
+  }
+}
+
+/* ============================================================
+   VOLUME RADAR (simplified) — Binance free 24hr ticker stats.
+   Not the same proprietary scoring as paid terminals — this shows
+   real 24h quote volume and price change, ranked by volume.
+   ============================================================ */
+async function loadVolumeRadar(){
+  const symbols = ['BTCUSDT','ETHUSDT','BNBUSDT','SOLUSDT','XRPUSDT','DOGEUSDT'];
+  try{
+    const res = await fetch('https://api.binance.com/api/v3/ticker/24hr');
+    const all = await res.json();
+    const rows = symbols
+      .map(s => all.find(x => x.symbol === s))
+      .filter(Boolean)
+      .sort((a,b) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume));
+    document.getElementById('vradarBody').innerHTML = rows.map(r => {
+      const chg = parseFloat(r.priceChangePercent);
+      const up = chg >= 0;
+      const volM = (parseFloat(r.quoteVolume)/1e6).toFixed(1);
+      return `<tr class="coin-row" onclick="openCoinModal('${r.symbol.replace('USDT','')}','${r.symbol.replace('USDT','')}')">
+        <td class="vr-sym">${r.symbol.replace('USDT','')}</td>
+        <td>$${volM}M</td>
+        <td class="${up?'vr-up':'vr-down'}">${up?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%</td>
+      </tr>`;
+    }).join('');
+  }catch(e){
+    document.getElementById('vradarBody').innerHTML = '<tr><td colspan="3">Unavailable right now.</td></tr>';
+  }
+}
+
+loadCoinbasePremium();
+loadStablecoinFlow();
+loadVolumeRadar();
+setInterval(loadCoinbasePremium, 60000);
+setInterval(loadStablecoinFlow, 15*60000);
+setInterval(loadVolumeRadar, 60000);
+
+/* ============================================================
+   ALL COINS — top 100 by market cap, CoinGecko free public API.
+   Single call loads all rows; search box filters client-side
+   (no extra API calls needed while typing).
+   ============================================================ */
+let ALL_COINS_CACHE = [];
+
+async function loadAllCoins(){
+  try{
+    const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&price_change_percentage=24h');
+    ALL_COINS_CACHE = await res.json();
+    document.getElementById('allCoinsCount').textContent = '(' + ALL_COINS_CACHE.length + ' coins)';
+    renderAllCoins(ALL_COINS_CACHE);
+  }catch(e){
+    document.getElementById('allCoinsBody').innerHTML = '<tr><td colspan="6">Unavailable right now.</td></tr>';
+  }
+}
+
+function renderAllCoins(list){
+  const body = document.getElementById('allCoinsBody');
+  if(!list.length){ body.innerHTML = '<tr><td colspan="6">No matches.</td></tr>'; return; }
+  body.innerHTML = list.slice(0, 100).map(c => {
+    const chg = c.price_change_percentage_24h || 0;
+    const up = chg >= 0;
+    const price = c.current_price >= 1 ? c.current_price.toLocaleString(undefined,{maximumFractionDigits:2}) : c.current_price.toPrecision(4);
+    return `<tr class="coin-row" onclick="openCoinModal('${c.symbol.toUpperCase()}','${c.name.replace(/'/g,"")}')">
+      <td>${c.market_cap_rank ?? '—'}</td>
+      <td class="vr-sym">${c.symbol.toUpperCase()}</td>
+      <td>$${price}</td>
+      <td class="${up?'vr-up':'vr-down'}">${up?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%</td>
+      <td>$${(c.total_volume/1e6).toFixed(1)}M</td>
+      <td>$${(c.market_cap/1e9).toFixed(2)}B</td>
+    </tr>`;
+  }).join('');
+}
+
+document.getElementById('coinSearch').addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  if(!q){ renderAllCoins(ALL_COINS_CACHE); return; }
+  const filtered = ALL_COINS_CACHE.filter(c =>
+    c.symbol.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)
+  );
+  renderAllCoins(filtered);
+});
+
+loadAllCoins();
+setInterval(loadAllCoins, 90000);
+
+/* ============================================================
+   LIVE LIQUIDATIONS — Binance Futures public WebSocket, free,
+   no key. Streams real forced-liquidation orders as they happen.
+   ============================================================ */
+function startLiquidationFeed(){
+  const feed = document.getElementById('liqFeed');
+  let count = 0;
+  const heatBuckets = {}; // priceLevel(rounded) -> { long: usd, short: usd }
+
+  function renderHeatmap(){
+    const wrap = document.getElementById('heatmapWrap');
+    const levels = Object.keys(heatBuckets).map(Number).sort((a,b) => b - a);
+    if(levels.length === 0) return;
+    const maxVal = Math.max(...levels.map(l => heatBuckets[l].long + heatBuckets[l].short));
+    wrap.innerHTML = levels.slice(0, 14).map(level => {
+      const b = heatBuckets[level];
+      const total = b.long + b.short;
+      const longPct = maxVal ? (b.long / maxVal) * 100 : 0;
+      const shortPct = maxVal ? (b.short / maxVal) * 100 : 0;
+      return `<div class="heat-row">
+        <div class="heat-price">$${level.toLocaleString()}</div>
+        <div class="heat-bar-track"><div class="heat-bar-fill long" style="width:${longPct}%"></div></div>
+        <div class="heat-bar-track"><div class="heat-bar-fill short" style="width:${shortPct}%"></div></div>
+      </div>`;
+    }).join('');
+  }
+
+  try{
+    const ws = new WebSocket('wss://fstream.binance.com/ws/!forceOrder@arr');
+    const connectTimeout = setTimeout(() => {
+      if(ws.readyState !== WebSocket.OPEN){
+        feed.innerHTML = '<div class="liq-empty">Could not connect to the live feed (timed out). This usually means the connection is being blocked by your network/browser — check the browser console (F12) for the exact error.</div>';
+        wrap_note();
+      }
+    }, 8000);
+    function wrap_note(){
+      const wrap = document.getElementById('heatmapWrap');
+      wrap.innerHTML = '<div class="heatmap-empty">Waiting on the same live feed above — will fill in once it connects.</div>';
+    }
+    ws.onopen = () => { clearTimeout(connectTimeout); feed.innerHTML = '<div class="liq-empty">Connected — waiting for next liquidation…</div>'; };
+    ws.onmessage = (msg) => {
+      const data = JSON.parse(msg.data);
+      const o = data.o;
+      if(!o) return;
+      const isLong = o.S === 'SELL'; // a SELL force-order liquidates a long position
+      const price = parseFloat(o.p);
+      const usdValue = (price * parseFloat(o.q));
+      if(usdValue < 5000) return; // skip tiny noise
+
+      // heatmap bucket: round price to a sensible step based on magnitude
+      const step = price > 10000 ? 250 : price > 1000 ? 25 : price > 10 ? 0.5 : 0.005;
+      const bucket = Math.round(price / step) * step;
+      if(!heatBuckets[bucket]) heatBuckets[bucket] = { long: 0, short: 0 };
+      if(isLong) heatBuckets[bucket].long += usdValue; else heatBuckets[bucket].short += usdValue;
+      renderHeatmap();
+
+      const row = document.createElement('div');
+      row.className = 'liq-row ' + (isLong ? 'long' : 'short');
+      const time = new Date(o.T).toLocaleTimeString();
+      row.innerHTML = `<span><span class="liq-side">${isLong?'LONG LIQ':'SHORT LIQ'}</span> ${o.s.replace('USDT','')} — $${Math.round(usdValue).toLocaleString()}</span><span class="liq-time">${time}</span>`;
+      if(count === 0) feed.innerHTML = '';
+      feed.prepend(row);
+      count++;
+      while(feed.children.length > 12) feed.removeChild(feed.lastChild);
+    };
+    ws.onerror = (err) => {
+      clearTimeout(connectTimeout);
+      feed.innerHTML = '<div class="liq-empty">Connection error — likely blocked by network/firewall/ad-blocker. Open browser console (F12) to see the exact error.</div>';
+      document.getElementById('heatmapWrap').innerHTML = '<div class="heatmap-empty">Same connection issue as the feed above.</div>';
+      console.error('Liquidation WebSocket error:', err);
+    };
+    ws.onclose = (ev) => {
+      clearTimeout(connectTimeout);
+      if(count === 0){
+        feed.innerHTML = `<div class="liq-empty">Connection closed before receiving data (code ${ev.code}). Check browser console (F12) for details.</div>`;
+        document.getElementById('heatmapWrap').innerHTML = '<div class="heatmap-empty">Same connection issue as the feed above.</div>';
+      }
+    };
+  }catch(e){
+    feed.innerHTML = '<div class="liq-empty">Live feed not supported in this browser.</div>';
+    console.error('Liquidation feed exception:', e);
+  }
+}
+startLiquidationFeed();
+
+/* ============================================================
+   ORDER FLOW — BTC/USDT
+   1) aggTrade WebSocket (free, no key): every executed trade,
+      with isBuyerMaker flag. If isBuyerMaker=true, the taker
+      (aggressor) SOLD; if false, the taker BOUGHT. This is the
+      standard definition used to classify taker buy/sell volume.
+   2) depth20 WebSocket (free, no key): top 20 bid/ask levels,
+      used for Order Book Imbalance.
+   3) REST klines (free, no key): 1-minute candles, used to
+      compute RSI(14) with Wilder's smoothing, and a rolling
+      VWAP over the last 100 one-minute candles.
+   ============================================================ */
+let cvdTotal = 0;
+let deltaWindow = []; // {t, delta} for rolling 60s taker delta
+
+function updateDeltaDisplay(){
+  const now = Date.now();
+  deltaWindow = deltaWindow.filter(d => now - d.t <= 60000);
+  const buyVol = deltaWindow.filter(d => d.delta > 0).reduce((s,d) => s + d.delta, 0);
+  const sellVol = Math.abs(deltaWindow.filter(d => d.delta < 0).reduce((s,d) => s + d.delta, 0));
+  const netDelta = buyVol - sellVol;
+  const up = netDelta >= 0;
+  document.getElementById('ofDelta').innerHTML =
+    `<span style="color:${up?'var(--green)':'var(--red)'}">${up?'+':''}${netDelta.toFixed(3)} BTC</span>`;
+
+  const total = buyVol + sellVol;
+  const buyPct = total ? (buyVol/total)*100 : 50;
+  document.getElementById('ofDeltaBar').style.width = buyPct.toFixed(1) + '%';
+
+  const cvdUp = cvdTotal >= 0;
+  document.getElementById('ofCvd').innerHTML =
+    `<span style="color:${cvdUp?'var(--green)':'var(--red)'}">${cvdUp?'+':''}${cvdTotal.toFixed(3)} BTC</span>`;
+}
+
+function startTradeStream(){
+  try{
+    const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@aggTrade');
+    ws.onmessage = (msg) => {
+      const t = JSON.parse(msg.data);
+      const qty = parseFloat(t.q);
+      const delta = t.m ? -qty : qty; // t.m === isBuyerMaker
+      cvdTotal += delta;
+      deltaWindow.push({ t: Date.now(), delta });
+      updateDeltaDisplay();
+    };
+    ws.onerror = () => { document.getElementById('ofDelta').textContent = 'unavailable'; };
+  }catch(e){
+    document.getElementById('ofDelta').textContent = 'unsupported';
+  }
+}
+
+function startDepthStream(){
+  try{
+    const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@depth20@1000ms');
+    ws.onmessage = (msg) => {
+      const d = JSON.parse(msg.data);
+      const bidVol = d.bids.reduce((s,[p,q]) => s + parseFloat(q), 0);
+      const askVol = d.asks.reduce((s,[p,q]) => s + parseFloat(q), 0);
+      const imbalance = (bidVol - askVol) / (bidVol + askVol);
+      const up = imbalance >= 0;
+      document.getElementById('ofImbalance').innerHTML =
+        `<span style="color:${up?'var(--green)':'var(--red)'}">${up?'+':''}${(imbalance*100).toFixed(1)}%</span>`;
+    };
+    ws.onerror = () => { document.getElementById('ofImbalance').textContent = 'unavailable'; };
+  }catch(e){
+    document.getElementById('ofImbalance').textContent = 'unsupported';
+  }
+}
+
+function calcRSI(closes, period=14){
+  if(closes.length < period+1) return null;
+  let gains = 0, losses = 0;
+  for(let i=1;i<=period;i++){
+    const diff = closes[i] - closes[i-1];
+    if(diff >= 0) gains += diff; else losses -= diff;
+  }
+  let avgGain = gains/period, avgLoss = losses/period;
+  for(let i=period+1;i<closes.length;i++){
+    const diff = closes[i] - closes[i-1];
+    const gain = diff > 0 ? diff : 0;
+    const loss = diff < 0 ? -diff : 0;
+    avgGain = (avgGain*(period-1) + gain) / period;
+    avgLoss = (avgLoss*(period-1) + loss) / period;
+  }
+  if(avgLoss === 0) return 100;
+  const rs = avgGain/avgLoss;
+  return 100 - (100/(1+rs));
+}
+
+async function loadRsiAndVwap(){
+  try{
+    const res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=150');
+    const klines = await res.json();
+    const closes = klines.map(k => parseFloat(k[4]));
+    const rsi = calcRSI(closes, 14);
+    if(rsi !== null){
+      const zone = rsi >= 70 ? 'var(--red)' : rsi <= 30 ? 'var(--green)' : 'var(--ink)';
+      document.getElementById('ofRsi').innerHTML = `<span style="color:${zone}">${rsi.toFixed(1)}</span>`;
+    }
+
+    const last100 = klines.slice(-100);
+    let pvSum = 0, vSum = 0;
+    last100.forEach(k => {
+      const high = parseFloat(k[2]), low = parseFloat(k[3]), close = parseFloat(k[4]), vol = parseFloat(k[5]);
+      const typicalPrice = (high+low+close)/3;
+      pvSum += typicalPrice * vol;
+      vSum += vol;
+    });
+    const vwap = vSum ? pvSum/vSum : 0;
+    document.getElementById('ofVwap').textContent = '$' + vwap.toLocaleString(undefined,{maximumFractionDigits:2});
+  }catch(e){
+    document.getElementById('ofRsi').textContent = 'unavailable';
+    document.getElementById('ofVwap').textContent = 'unavailable';
+  }
+}
+
+startTradeStream();
+startDepthStream();
+loadRsiAndVwap();
+setInterval(loadRsiAndVwap, 30000);
+setInterval(updateDeltaDisplay, 2000);
+
+document.getElementById('radarStatus').textContent = 'live';
+
+/* ============================================================
+   COIN DETAIL MODAL — real data only, no fallback numbers guessed.
+   1) Live price/24h high/low: Binance @ticker WebSocket (free, no key)
+   2) Support/Resistance: Classic Pivot Points, a standard public
+      formula, computed from the PRIOR completed daily candle's
+      High/Low/Close (free Binance klines REST, no key):
+        Pivot (PP) = (High + Low + Close) / 3
+        R1 = (2×PP) − Low        S1 = (2×PP) − High
+        R2 = PP + (High − Low)   S2 = PP − (High − Low)
+   If a coin has no BTC/ETH-style USDT pair on Binance, this is
+   stated plainly instead of showing invented numbers.
+   ============================================================ */
+let modalWs = null;
+let modalDepthWs = null;
+
+function fmtPrice(p){
+  if(p === null || p === undefined || isNaN(p)) return '—';
+  return p >= 1 ? '$' + p.toLocaleString(undefined,{maximumFractionDigits:2}) : '$' + p.toPrecision(4);
+}
+
+/* Draws the 4-axis radar shape. Each input is already 0-100.
+   Axes (clockwise from top): RSI, Taker Buy %, Imbalance, Volatility */
+function drawRadar(rsi, takerBuy, imbalance, volatility){
+  const center = 100, maxR = 80;
+  const pts = [rsi, takerBuy, imbalance, volatility].map((val, i) => {
+    const angle = (Math.PI/2) - (i * Math.PI/2); // start top, go clockwise
+    const r = (Math.max(0, Math.min(100, val)) / 100) * maxR;
+    const x = center + r * Math.cos(angle);
+    const y = center - r * Math.sin(angle);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  document.getElementById('radarShape').setAttribute('points', pts);
+}
+
+async function loadModalRadar(binanceSymbol){
+  try{
+    // RSI(14) + Taker Buy Ratio from 1h klines (real Binance data)
+    const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${binanceSymbol}&interval=1h&limit=100`);
+    if(!res.ok) throw new Error('no klines');
+    const klines = await res.json();
+    const closes = klines.map(k => parseFloat(k[4]));
+    const rsi = calcRSI(closes, 14) ?? 50;
+
+    const last24 = klines.slice(-24);
+    const totalVol = last24.reduce((s,k) => s + parseFloat(k[5]), 0);
+    const takerBuyVol = last24.reduce((s,k) => s + parseFloat(k[9]), 0); // takerBuyBaseAssetVolume
+    const takerBuyPct = totalVol ? (takerBuyVol/totalVol)*100 : 50;
+
+    // Volatility: 24h (High-Low)/Low % — from the same ticker already streaming
+    const highEl = document.getElementById('modalHigh').textContent;
+    const lowEl = document.getElementById('modalLow').textContent;
+    const high = parseFloat(highEl.replace(/[$,]/g,''));
+    const low = parseFloat(lowEl.replace(/[$,]/g,''));
+    const volatilityPct = (high && low) ? ((high-low)/low)*100 : 0;
+    const volatilityScaled = Math.min((volatilityPct/15)*100, 100); // 15% range = full scale
+
+    // Order Book Imbalance — reuse from live depth stream (set by startModalDepth)
+    const imbalanceRaw = window._modalImbalance ?? 0; // -100..100
+    const imbalanceScaled = (imbalanceRaw + 100) / 2;
+
+    drawRadar(rsi, takerBuyPct, imbalanceScaled, volatilityScaled);
+    document.getElementById('radarLegend').innerHTML = `
+      <div>RSI(14,1h): <span class="rl-val">${rsi.toFixed(1)}</span></div>
+      <div>Taker Buy: <span class="rl-val">${takerBuyPct.toFixed(1)}%</span></div>
+      <div>Book Imbalance: <span class="rl-val">${imbalanceRaw.toFixed(1)}%</span></div>
+      <div>24h Volatility: <span class="rl-val">${volatilityPct.toFixed(2)}%</span></div>
+    `;
+
+    // refresh imbalance/radar periodically while modal open
+    window._radarRefreshInterval = setInterval(() => {
+      const imb = window._modalImbalance ?? 0;
+      drawRadar(rsi, takerBuyPct, (imb+100)/2, volatilityScaled);
+      document.querySelector('.radar-legend div:nth-child(3) .rl-val').textContent = imb.toFixed(1) + '%';
+    }, 3000);
+  }catch(e){
+    document.getElementById('radarLegend').innerHTML = '<div>Radar data unavailable for this pair.</div>';
+  }
+}
+
+function startModalDepth(binanceSymbol){
+  window._modalImbalance = 0;
+  try{
+    modalDepthWs = new WebSocket(`wss://stream.binance.com:9443/ws/${binanceSymbol.toLowerCase()}@depth20@1000ms`);
+    modalDepthWs.onmessage = (msg) => {
+      const d = JSON.parse(msg.data);
+      const bidVol = d.bids.reduce((s,[p,q]) => s + parseFloat(q), 0);
+      const askVol = d.asks.reduce((s,[p,q]) => s + parseFloat(q), 0);
+      window._modalImbalance = ((bidVol - askVol) / (bidVol + askVol)) * 100;
+
+      const bidsBody = document.getElementById('obBids');
+      const asksBody = document.getElementById('obAsks');
+      bidsBody.innerHTML = d.bids.slice(0,8).map(([p,q]) => {
+        const usd = parseFloat(p)*parseFloat(q);
+        return `<tr><td class="ob-price-bid">${parseFloat(p).toLocaleString(undefined,{maximumFractionDigits:2})}</td><td>${parseFloat(q).toFixed(4)}</td><td>$${usd>=1000?(usd/1000).toFixed(1)+'K':usd.toFixed(0)}</td></tr>`;
+      }).join('');
+      asksBody.innerHTML = d.asks.slice(0,8).map(([p,q]) => {
+        const usd = parseFloat(p)*parseFloat(q);
+        return `<tr><td class="ob-price-ask">${parseFloat(p).toLocaleString(undefined,{maximumFractionDigits:2})}</td><td>${parseFloat(q).toFixed(4)}</td><td>$${usd>=1000?(usd/1000).toFixed(1)+'K':usd.toFixed(0)}</td></tr>`;
+      }).join('');
+    };
+    modalDepthWs.onerror = () => {
+      document.getElementById('obBids').innerHTML = '<tr><td colspan="3">Unavailable</td></tr>';
+      document.getElementById('obAsks').innerHTML = '<tr><td colspan="3">Unavailable</td></tr>';
+    };
+  }catch(e){}
+}
+
+window.openCoinModal = async function(symbol, name){
+  const binanceSymbol = symbol.toUpperCase() + 'USDT';
+  document.getElementById('modalSymbol').textContent = symbol.toUpperCase();
+  document.getElementById('modalName').textContent = name;
+  document.getElementById('modalPrice').textContent = 'loading…';
+  document.getElementById('modalLiveStatus').textContent = 'connecting…';
+  document.getElementById('modalHigh').textContent = '—';
+  document.getElementById('modalLow').textContent = '—';
+  document.getElementById('srR2').textContent = '—';
+  document.getElementById('srR1').textContent = '—';
+  document.getElementById('srPivot').textContent = '—';
+  document.getElementById('srS1').textContent = '—';
+  document.getElementById('srS2').textContent = '—';
+  document.getElementById('modalNote').textContent = '';
+  document.getElementById('radarLegend').innerHTML = 'loading…';
+  document.getElementById('obBids').innerHTML = '<tr><td colspan="3">loading…</td></tr>';
+  document.getElementById('obAsks').innerHTML = '<tr><td colspan="3">loading…</td></tr>';
+  drawRadar(0,0,0,0);
+  document.getElementById('coinModalOverlay').classList.add('open');
+
+  // Close any previous live connections/intervals before opening new ones
+  if(modalWs){ modalWs.close(); modalWs = null; }
+  if(modalDepthWs){ modalDepthWs.close(); modalDepthWs = null; }
+  if(window._radarRefreshInterval){ clearInterval(window._radarRefreshInterval); }
+
+  // 1) Live price + 24h high/low via Binance ticker WebSocket
+  try{
+    modalWs = new WebSocket(`wss://stream.binance.com:9443/ws/${binanceSymbol.toLowerCase()}@ticker`);
+    modalWs.onopen = () => { document.getElementById('modalLiveStatus').textContent = 'live'; };
+    modalWs.onmessage = (msg) => {
+      const t = JSON.parse(msg.data);
+      document.getElementById('modalPrice').textContent = fmtPrice(parseFloat(t.c));
+      document.getElementById('modalHigh').textContent = fmtPrice(parseFloat(t.h));
+      document.getElementById('modalLow').textContent = fmtPrice(parseFloat(t.l));
+    };
+    modalWs.onerror = () => {
+      document.getElementById('modalLiveStatus').textContent = 'unavailable';
+      document.getElementById('modalPrice').textContent = 'Not available';
+      document.getElementById('modalNote').textContent = `${symbol.toUpperCase()} does not appear to trade as a ${binanceSymbol} pair on Binance, so live data isn't available for it here — this is stated honestly rather than showing made-up numbers.`;
+    };
+  }catch(e){
+    document.getElementById('modalLiveStatus').textContent = 'unsupported in this browser';
+  }
+
+  // 2) Support/Resistance via Classic Pivot Points from prior daily candle
+  try{
+    const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${binanceSymbol}&interval=1d&limit=2`);
+    if(!res.ok) throw new Error('no data');
+    const klines = await res.json();
+    if(!Array.isArray(klines) || klines.length < 2) throw new Error('insufficient data');
+    const prior = klines[klines.length - 2]; // last FULLY closed daily candle
+    const high = parseFloat(prior[2]), low = parseFloat(prior[3]), close = parseFloat(prior[4]);
+    const pp = (high + low + close) / 3;
+    const r1 = (2*pp) - low, s1 = (2*pp) - high;
+    const r2 = pp + (high - low), s2 = pp - (high - low);
+    document.getElementById('srR2').textContent = fmtPrice(r2);
+    document.getElementById('srR1').textContent = fmtPrice(r1);
+    document.getElementById('srPivot').textContent = fmtPrice(pp);
+    document.getElementById('srS1').textContent = fmtPrice(s1);
+    document.getElementById('srS2').textContent = fmtPrice(s2);
+  }catch(e){
+    document.getElementById('modalNote').textContent = (document.getElementById('modalNote').textContent + ' Support/Resistance couldn\'t be calculated — no prior-day candle available for this pair on Binance.').trim();
+  }
+
+  // 3) Order book (live) + 4) Market Radar (real computed metrics)
+  startModalDepth(binanceSymbol);
+  setTimeout(() => loadModalRadar(binanceSymbol), 600); // slight delay so imbalance has a first reading
+};
+
+window.closeCoinModal = function(){
+  document.getElementById('coinModalOverlay').classList.remove('open');
+  if(modalWs){ modalWs.close(); modalWs = null; }
+  if(modalDepthWs){ modalDepthWs.close(); modalDepthWs = null; }
+  if(window._radarRefreshInterval){ clearInterval(window._radarRefreshInterval); }
+};
+</script>
+
+</body>
+</html>

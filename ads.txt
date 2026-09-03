@@ -1,0 +1,3 @@
+# Replace PUB_ID_HERE with your real AdSense Publisher ID (looks like pub-1234567890123456)
+# This file MUST sit at the root of your live site: yourdomain.com/ads.txt
+google.com, PUB_ID_HERE, DIRECT, f08c47fec0942fa0
