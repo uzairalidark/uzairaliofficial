@@ -5,7 +5,7 @@
    project only — actual security comes from Firestore Rules +
    Authentication, set up in the Firebase Console).
    ============================================================ */
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyDEVoYqC1mL2Dy4LqIJnFefH07-Q8iwGI8",
   authDomain: "uzairali-darkcrypto.firebaseapp.com",
   projectId: "uzairali-darkcrypto",
@@ -17,4 +17,4 @@ const firebaseConfig = {
 /* Only this email is allowed to publish posts.
    Set this to the email you used when creating your
    Firebase Authentication user. */
-const ADMIN_EMAIL = "PASTE_YOUR_ADMIN_EMAIL_peditor620.gmail.com";
+export const ADMIN_EMAIL = "peditor620@gmail.com";
