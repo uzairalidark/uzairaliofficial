@@ -1,3 +1,12 @@
-# Replace PUB_ID_HERE with your real AdSense Publisher ID (looks like pub-1234567890123456)
-# This file MUST sit at the root of your live site: yourdomain.com/ads.txt
-google.com, PUB_ID_HERE, DIRECT, f08c47fec0942fa0
+# Adsterra does not require an ads.txt entry to approve or serve ads —
+# their process is: register as a publisher, add this domain, wait for
+# approval, then paste the ad script/code they give you into the site.
+# This file can stay empty (or with just this comment) for Adsterra-only
+# monetization.
+#
+# If you later also apply to Google AdSense, uncomment the line below
+# and replace PUB_ID_HERE with your real AdSense Publisher ID
+# (looks like pub-1234567890123456). This file must then sit at the
+# root of your live site: yourdomain.com/ads.txt
+#
+# google.com, PUB_ID_HERE, DIRECT, f08c47fec0942fa0
