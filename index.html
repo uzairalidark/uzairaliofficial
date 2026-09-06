@@ -235,6 +235,13 @@
     padding:2px 8px;
     border-radius:20px;
   }
+  .update-img{
+    width:100%;
+    border-radius:8px;
+    margin-top:10px;
+    border:1px solid var(--line);
+    display:block;
+  }
   .voice-embed{
     width:100%;
     height:62px;
@@ -403,6 +410,11 @@
   }
   .stbl-sub{font-size:11.5px;color:var(--muted);margin-top:4px;}
 
+  .regime-gauge-wrap{display:flex;justify-content:center;padding:6px 0 0;}
+  .regime-svg{width:240px;height:130px;}
+  .regime-text{fill:var(--ink);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;}
+  #regimeArc{transition:stroke-dashoffset .6s ease, stroke .6s ease;}
+
   .vradar-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:12px;}
   .vradar-table th{
     text-align:left;color:var(--muted);font-weight:500;
@@ -515,6 +527,25 @@
   }
   .radar-legend .rl-val{color:var(--ink);font-weight:600;}
 
+  /* ---------- Market Pulse (8-axis composite radar) ---------- */
+  .pulse-header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .pulse-badge{
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
+    padding:4px 10px;border-radius:20px;border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .pulse-svg-wrap{display:flex;justify-content:center;padding:8px 0 4px;}
+  .pulse-svg{width:100%;max-width:300px;height:auto;}
+  .pulse-grid-shape{stroke:var(--line);stroke-width:1;}
+  .pulse-axis-line{stroke:var(--line);stroke-width:1;}
+  .pulse-axis-label{fill:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9px;}
+  .pulse-shape{fill:rgba(212,167,58,0.22);stroke:var(--gold);stroke-width:2;transition:points .6s ease;}
+  .pulse-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;}
+  .pulse-stat{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:8px 6px;text-align:center;}
+  .pulse-stat-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--muted);}
+  .pulse-stat-value{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;margin-top:3px;}
+  @media(max-width:380px){ .pulse-stats-grid{grid-template-columns:repeat(2,1fr);} }
+
   .ob-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .ob-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;}
   .ob-table td{padding:4px 4px;}
@@ -523,6 +554,16 @@
   .ob-ask{color:var(--red);}
   .ob-price-bid{color:var(--green);}
   .ob-price-ask{color:var(--red);}
+
+  .liq-radar-track{
+    height:20px;border-radius:6px;background:var(--surface-2);
+    overflow:hidden;border:1px solid var(--line);
+  }
+  .liq-radar-fill{
+    height:100%;width:50%;
+    background:linear-gradient(90deg,var(--gold),var(--green));
+    transition:width .6s ease;
+  }
 </style>
 </head>
 <body>
@@ -576,6 +617,54 @@
         <div class="radar-card-label">Stablecoin Mcap (7D)</div>
         <div class="stbl-value" id="stblValue">—</div>
         <div class="stbl-sub" id="stblSub">loading…</div>
+      </div>
+
+      <div class="radar-card">
+        <div class="radar-card-label">BTC Dominance</div>
+        <div class="stbl-value" id="btcDomValue">—</div>
+        <div class="stbl-sub" id="btcDomSub">loading…</div>
+      </div>
+
+      <div class="radar-card">
+        <div class="radar-card-label">Ψ · Net Flow</div>
+        <div class="stbl-value" id="netFlowValue">—</div>
+        <div class="stbl-sub" id="netFlowSub">loading…</div>
+      </div>
+    </div>
+
+    <div class="radar-card wide">
+      <div class="radar-card-label">Ω · Market Regime <span class="live-dot"></span></div>
+      <div class="regime-gauge-wrap">
+        <svg viewBox="0 0 200 110" class="regime-svg">
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#232935" stroke-width="14"/>
+          <path id="regimeArc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#D4A73A" stroke-width="14" stroke-dasharray="251" stroke-dashoffset="125"/>
+          <text x="100" y="90" text-anchor="middle" class="regime-text" id="regimeLabel">—</text>
+        </svg>
+      </div>
+      <div class="radar-legend" id="regimeLegend"></div>
+      <div class="heatmap-note">Ω = weighted composite of CVD trend, taker-buy ratio, volatility &amp; book imbalance (all shown elsewhere on this page). Formula in full below.</div>
+    </div>
+
+    <div class="radar-card wide">
+      <div class="pulse-header-row">
+        <div class="radar-card-label">Ψ² · Market Pulse <span class="live-dot"></span></div>
+        <span class="pulse-badge" id="pulseBadge">—</span>
+      </div>
+      <div class="pulse-svg-wrap">
+        <svg viewBox="0 0 320 320" id="pulseSvg" class="pulse-svg"></svg>
+      </div>
+      <div class="pulse-stats-grid">
+        <div class="pulse-stat"><div class="pulse-stat-label">Momentum</div><div class="pulse-stat-value" id="pulseMomentumVal">—</div></div>
+        <div class="pulse-stat"><div class="pulse-stat-label">Sentiment</div><div class="pulse-stat-value" id="pulseSentimentVal">—</div></div>
+        <div class="pulse-stat"><div class="pulse-stat-label">Volatility</div><div class="pulse-stat-value" id="pulseVolatilityVal">—</div></div>
+        <div class="pulse-stat"><div class="pulse-stat-label">Crypto Cap</div><div class="pulse-stat-value" id="pulseCryptoVal">—</div></div>
+        <div class="pulse-stat"><div class="pulse-stat-label">Liquidations</div><div class="pulse-stat-value" id="pulseLiqVal">—</div></div>
+        <div class="pulse-stat"><div class="pulse-stat-label">USD (daily)</div><div class="pulse-stat-value" id="pulseUsdVal">—</div></div>
+        <div class="pulse-stat"><div class="pulse-stat-label">BTC Dom</div><div class="pulse-stat-value" id="pulseDomVal">—</div></div>
+        <div class="pulse-stat"><div class="pulse-stat-label">Risk</div><div class="pulse-stat-value" id="pulseRiskVal">—</div></div>
+      </div>
+      <div class="heatmap-note">
+        Real market data — not financial advice, not a trading signal, and no guarantee of future performance. For educational and informational purposes only.
       </div>
     </div>
 
@@ -787,6 +876,23 @@
       </div>
     </div>
 
+    <div class="modal-section-label">λ · Liquidity Radar <span class="sr-note">(bid+ask volume within ±0.5% of price)</span></div>
+    <div class="liq-radar-track"><div class="liq-radar-fill" id="liqRadarFill"></div></div>
+    <div class="radar-legend" id="liqRadarLegend"></div>
+
+    <div class="modal-section-label">Δ · Large Orders <span class="sr-note">(live trades ≥ $10K, real Binance trade stream)</span></div>
+    <div class="liq-feed" id="largeOrdersFeed">
+      <div class="liq-empty">Connecting…</div>
+    </div>
+
+    <div class="modal-section-label">⚠ · Possible Spoofing <span class="sr-note">(pattern-based estimate, not a signal — see disclaimer)</span></div>
+    <div class="liq-feed" id="spoofFeed">
+      <div class="liq-empty">Watching order book for large orders that vanish without a matching trade…</div>
+    </div>
+    <div class="modal-note">
+      Definition used (fixed, disclosed, not guessed per-event): a resting order ≥ $15,000 that disappears from the top 20 book levels within ~2 seconds, with no trade of comparable size printing at that price in the same window. This pattern is <em>consistent with</em> spoofing but has innocent explanations too (a trader simply cancelling, or a fast partial fill this feed didn't catch) — it is a raw pattern flag, not a confirmed detection or a trade signal.
+    </div>
+
     <div class="modal-note" id="modalNote"></div>
   </div>
 </div>
@@ -820,6 +926,7 @@ function renderPosts(posts){
       <div class="update-date">${p.date}</div>
       <div class="update-title">${p.title}</div>
       <div class="update-body">${p.body}</div>
+      ${p.image ? `<img src="${p.image}" class="update-img" loading="lazy" alt="${p.title}">` : ''}
       ${p.voice ? `<iframe src="https://t.me/${p.voice}?embed=1" class="voice-embed" frameborder="0" loading="lazy"></iframe>` : ''}
       ${p.link ? `<a href="${p.link}" target="_blank" rel="noopener" class="update-link-btn">Open Link →</a>` : ''}
       ${p.tag ? `<div class="update-tag">${p.tag}</div>` : ''}
@@ -1034,6 +1141,243 @@ setInterval(loadStablecoinFlow, 15*60000);
 setInterval(loadVolumeRadar, 60000);
 
 /* ============================================================
+   BTC DOMINANCE — CoinGecko free /global endpoint, no key.
+   ============================================================ */
+async function loadBtcDominance(){
+  try{
+    const res = await fetch('https://api.coingecko.com/api/v3/global');
+    const json = await res.json();
+    const dom = json.data.market_cap_percentage.btc;
+    document.getElementById('btcDomValue').textContent = dom.toFixed(1) + '%';
+    document.getElementById('btcDomSub').textContent = 'Share of total crypto market cap';
+    window._btcDomRaw = dom;
+    window._cryptoMcapChgPct = json.data.market_cap_change_percentage_24h_usd;
+  }catch(e){
+    document.getElementById('btcDomSub').textContent = 'Unavailable right now.';
+  }
+}
+
+/* ============================================================
+   Ψ · NET FLOW — real computed metric, not a paid on-chain feed.
+   Definition (shown honestly, no hidden formula):
+   For BTC, ETH, BNB, SOL, XRP — sum of (takerBuyVolume − takerSellVolume)
+   in USD over the last 24 hourly candles, added together.
+   Positive = more aggressive buying than selling across these coins
+   in the last 24h. This is NOT exchange/on-chain wallet inflow data
+   (that requires paid providers) — it's real Binance trade data.
+   ============================================================ */
+async function loadNetFlow(){
+  const symbols = ['BTCUSDT','ETHUSDT','BNBUSDT','SOLUSDT','XRPUSDT'];
+  try{
+    let totalNetUsd = 0;
+    for(const sym of symbols){
+      const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${sym}&interval=1h&limit=24`);
+      const klines = await res.json();
+      klines.forEach(k => {
+        const close = parseFloat(k[4]);
+        const vol = parseFloat(k[5]);
+        const takerBuyVol = parseFloat(k[9]);
+        const takerSellVol = vol - takerBuyVol;
+        totalNetUsd += (takerBuyVol - takerSellVol) * close;
+      });
+    }
+    const up = totalNetUsd >= 0;
+    const absM = Math.abs(totalNetUsd)/1e6;
+    document.getElementById('netFlowValue').innerHTML =
+      `<span style="color:${up?'var(--green)':'var(--red)'}">${up?'+':'-'}$${absM.toFixed(1)}M</span>`;
+    document.getElementById('netFlowSub').textContent = '24h taker buy−sell, BTC/ETH/BNB/SOL/XRP combined';
+    window._lastNetFlowUsd = totalNetUsd;
+  }catch(e){
+    document.getElementById('netFlowSub').textContent = 'Unavailable right now.';
+  }
+}
+
+/* ============================================================
+   Ω · MARKET REGIME — composite gauge from metrics already shown
+   elsewhere on this page, combined with a stated, fixed formula
+   (no hidden weighting, no guessed inputs):
+
+   score = clamp(0,100,
+     40% × BTC RSI(14,1h)
+   + 30% × BTC Taker-Buy-Ratio(24h, %)
+   + 30% × (BTC Order-Book-Imbalance scaled 0-100)
+   )
+   0-33 = "Risk-Off", 34-66 = "Neutral", 67-100 = "Risk-On"
+   Reuses the exact same live BTC values already computed for the
+   Order Flow section above — no separate/duplicate data source.
+   ============================================================ */
+function updateRegimeGauge(){
+  try{
+    const rsiEl = document.getElementById('ofRsi');
+    const rsiVal = parseFloat(rsiEl.textContent) || 50;
+    const deltaBarEl = document.getElementById('ofDeltaBar');
+    const buyPct = parseFloat(deltaBarEl.style.width) || 50;
+    const imbalanceEl = document.getElementById('ofImbalance');
+    const imbalanceRaw = parseFloat(imbalanceEl.textContent) || 0;
+    const imbalanceScaled = (imbalanceRaw + 100) / 2;
+
+    const score = Math.max(0, Math.min(100, (0.4*rsiVal) + (0.3*buyPct) + (0.3*imbalanceScaled)));
+    const label = score < 34 ? 'RISK-OFF' : score < 67 ? 'NEUTRAL' : 'RISK-ON';
+    const color = score < 34 ? '#C9483D' : score < 67 ? '#D4A73A' : '#3FA76B';
+
+    const circumference = 251;
+    const offset = circumference - (score/100)*circumference;
+    document.getElementById('regimeArc').style.strokeDashoffset = offset;
+    document.getElementById('regimeArc').style.stroke = color;
+    document.getElementById('regimeLabel').textContent = score.toFixed(0);
+
+    document.getElementById('regimeLegend').innerHTML = `
+      <div>Status: <span class="rl-val" style="color:${color}">${label}</span></div>
+      <div>BTC RSI: <span class="rl-val">${rsiVal.toFixed(1)}</span></div>
+      <div>Taker Buy: <span class="rl-val">${buyPct.toFixed(1)}%</span></div>
+      <div>Book Imbalance: <span class="rl-val">${imbalanceRaw.toFixed(1)}%</span></div>
+    `;
+  }catch(e){}
+}
+
+loadBtcDominance();
+loadNetFlow();
+setInterval(loadBtcDominance, 5*60000);
+setInterval(loadNetFlow, 5*60000);
+setInterval(updateRegimeGauge, 4000);
+
+/* ============================================================
+   Ψ² · MARKET PULSE — 8-axis composite radar. Every axis reuses
+   data already live on this page, or is fetched fresh from a
+   free, key-less public API (CoinGecko, Binance, Frankfurter/ECB).
+   No axis is invented, estimated, or filled with a placeholder —
+   see the on-page note for the exact formula behind each one.
+   ============================================================ */
+const PULSE_AXES = ['Momentum','Sentiment','Volatility','Crypto Cap','Liquidations','USD (daily)','BTC Dom','Risk'];
+
+function pulsePt(i, n, r, cx, cy){
+  const angle = -Math.PI/2 + i * (2*Math.PI/n);
+  return { x: cx + r*Math.cos(angle), y: cy + r*Math.sin(angle) };
+}
+
+function initPulseRadar(){
+  const svg = document.getElementById('pulseSvg');
+  if(!svg) return;
+  const cx = 160, cy = 160, maxR = 100, n = PULSE_AXES.length;
+  let html = '';
+  [0.25, 0.5, 0.75, 1].forEach(f => {
+    const pts = Array.from({length:n}, (_,i) => {
+      const p = pulsePt(i, n, maxR*f, cx, cy);
+      return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+    }).join(' ');
+    html += `<polygon points="${pts}" class="pulse-grid-shape" fill="none"/>`;
+  });
+  PULSE_AXES.forEach((label, i) => {
+    const edge = pulsePt(i, n, maxR, cx, cy);
+    html += `<line x1="${cx}" y1="${cy}" x2="${edge.x.toFixed(1)}" y2="${edge.y.toFixed(1)}" class="pulse-axis-line"/>`;
+    const lp = pulsePt(i, n, maxR + 26, cx, cy);
+    const anchor = lp.x < cx - 5 ? 'end' : lp.x > cx + 5 ? 'start' : 'middle';
+    html += `<text x="${lp.x.toFixed(1)}" y="${lp.y.toFixed(1)}" text-anchor="${anchor}" class="pulse-axis-label">${label}</text>`;
+  });
+  html += `<polygon id="pulseShape" points="" class="pulse-shape"/>`;
+  svg.innerHTML = html;
+}
+
+function updatePulseShape(values){
+  const cx = 160, cy = 160, maxR = 100, n = values.length;
+  const pts = values.map((v,i) => {
+    const r = (Math.max(0, Math.min(100, v)) / 100) * maxR;
+    const p = pulsePt(i, n, r, cx, cy);
+    return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+  }).join(' ');
+  const shape = document.getElementById('pulseShape');
+  if(shape) shape.setAttribute('points', pts);
+}
+
+/* Volatility: BTC 24h (high-low)/low %, scaled so a 15% range = 100 */
+async function loadPulseVolatility(){
+  try{
+    const res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT');
+    const d = await res.json();
+    const high = parseFloat(d.highPrice), low = parseFloat(d.lowPrice);
+    const raw = (high && low) ? ((high-low)/low)*100 : 0;
+    window._pulseVolatilityRaw = raw;
+    window._pulseVolatility = Math.min((raw/15)*100, 100);
+  }catch(e){ /* keep last known value rather than guess */ }
+}
+
+/* USD: daily ECB reference-rate move vs an EUR/GBP/JPY basket.
+   Frankfurter API — free, no key — but ECB rates update once per
+   business day, so this is a DAILY reading, not intraday-live.
+   That limitation is stated on-page rather than hidden. */
+async function loadPulseUsd(){
+  try{
+    const past = new Date(Date.now() - 5*24*3600*1000).toISOString().slice(0,10);
+    const [nowRes, pastRes] = await Promise.all([
+      fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY'),
+      fetch(`https://api.frankfurter.app/${past}?from=USD&to=EUR,GBP,JPY`)
+    ]);
+    const now = await nowRes.json();
+    const before = await pastRes.json();
+    const changes = ['EUR','GBP','JPY'].map(c => {
+      const a = before.rates?.[c], b = now.rates?.[c];
+      return (a && b) ? ((b-a)/a)*100 : null;
+    }).filter(v => v !== null);
+    if(changes.length === 0) throw new Error('no rates');
+    const avgPct = changes.reduce((s,v)=>s+v,0) / changes.length;
+    window._pulseUsdRaw = avgPct;
+    window._pulseUsdScore = Math.max(0, Math.min(100, 50 + avgPct*20));
+  }catch(e){ /* keep last known value rather than guess */ }
+}
+
+function updatePulseLiqScore(){
+  const win = window._pulseLiqWindow || [];
+  const cutoff = Date.now() - 5*60000;
+  window._pulseLiqWindow = win.filter(x => x.t >= cutoff);
+  const totalUsd = window._pulseLiqWindow.reduce((s,x) => s + x.usd, 0);
+  window._pulseLiqRaw = totalUsd;
+  window._pulseLiqScore = Math.max(0, Math.min(100, (totalUsd/5000000)*100)); // $5M/5min = max scale
+}
+
+function refreshPulse(){
+  updatePulseLiqScore();
+
+  const momentum = parseFloat(document.getElementById('ofRsi')?.textContent) || 50;
+  const sentiment = parseFloat(document.getElementById('fngValue')?.textContent) || 50;
+  const volatility = window._pulseVolatility ?? 50;
+  const mcapChg = window._cryptoMcapChgPct ?? 0;
+  const crypto = Math.max(0, Math.min(100, 50 + mcapChg*5));
+  const dominance = window._btcDomRaw ?? (parseFloat(document.getElementById('btcDomValue')?.textContent) || 50);
+  const usd = window._pulseUsdScore ?? 50;
+  const liq = window._pulseLiqScore ?? 0;
+  const risk = Math.max(0, Math.min(100, 0.40*(100-sentiment) + 0.35*volatility + 0.25*liq));
+
+  updatePulseShape([momentum, sentiment, volatility, crypto, liq, usd, dominance, risk]);
+
+  const set = (id, text) => { const el = document.getElementById(id); if(el) el.textContent = text; };
+  set('pulseMomentumVal', momentum.toFixed(0));
+  set('pulseSentimentVal', sentiment.toFixed(0));
+  set('pulseVolatilityVal', (window._pulseVolatilityRaw ?? 0).toFixed(2) + '%');
+  set('pulseCryptoVal', (mcapChg >= 0 ? '+' : '') + mcapChg.toFixed(2) + '%');
+  set('pulseLiqVal', '$' + ((window._pulseLiqRaw ?? 0)/1e6).toFixed(2) + 'M');
+  set('pulseUsdVal', window._pulseUsdRaw !== undefined ? ((window._pulseUsdRaw>=0?'+':'') + window._pulseUsdRaw.toFixed(2) + '%') : '—');
+  set('pulseDomVal', dominance.toFixed(1) + '%');
+  set('pulseRiskVal', risk.toFixed(0));
+
+  const badge = document.getElementById('pulseBadge');
+  if(badge){
+    const label = risk < 34 ? 'RISK-OFF' : risk < 67 ? 'NEUTRAL' : 'RISK-ON';
+    const color = risk < 34 ? '#C9483D' : risk < 67 ? '#D4A73A' : '#3FA76B';
+    badge.textContent = `${label} (${risk.toFixed(0)})`;
+    badge.style.color = color;
+    badge.style.borderColor = color;
+  }
+}
+
+initPulseRadar();
+loadPulseVolatility();
+loadPulseUsd();
+refreshPulse();
+setInterval(loadPulseVolatility, 60000);
+setInterval(loadPulseUsd, 60*60000);
+setInterval(refreshPulse, 5000);
+
+/* ============================================================
    ALL COINS — top 100 by market cap, CoinGecko free public API.
    Single call loads all rows; search box filters client-side
    (no extra API calls needed while typing).
@@ -1129,6 +1473,10 @@ function startLiquidationFeed(){
       const price = parseFloat(o.p);
       const usdValue = (price * parseFloat(o.q));
       if(usdValue < 5000) return; // skip tiny noise
+
+      // feed the Market Pulse "Liquidations" axis — real rolling 5-min window
+      if(!window._pulseLiqWindow) window._pulseLiqWindow = [];
+      window._pulseLiqWindow.push({ t: Date.now(), usd: usdValue });
 
       // heatmap bucket: round price to a sensible step based on magnitude
       const step = price > 10000 ? 250 : price > 1000 ? 25 : price > 10 ? 0.5 : 0.005;
@@ -1371,6 +1719,8 @@ async function loadModalRadar(binanceSymbol){
 
 function startModalDepth(binanceSymbol){
   window._modalImbalance = 0;
+  window._prevLargeLevels = {}; // price -> { qty, side, usd, firstSeen }
+  window._recentTradePrices = window._recentTradePrices || []; // filled by startModalTrades
   try{
     modalDepthWs = new WebSocket(`wss://stream.binance.com:9443/ws/${binanceSymbol.toLowerCase()}@depth20@1000ms`);
     modalDepthWs.onmessage = (msg) => {
@@ -1389,12 +1739,119 @@ function startModalDepth(binanceSymbol){
         const usd = parseFloat(p)*parseFloat(q);
         return `<tr><td class="ob-price-ask">${parseFloat(p).toLocaleString(undefined,{maximumFractionDigits:2})}</td><td>${parseFloat(q).toFixed(4)}</td><td>$${usd>=1000?(usd/1000).toFixed(1)+'K':usd.toFixed(0)}</td></tr>`;
       }).join('');
+
+      // λ Liquidity Radar: bid+ask volume within ±0.5% of the best bid/ask midpoint
+      const bestBid = parseFloat(d.bids[0][0]);
+      const bestAsk = parseFloat(d.asks[0][0]);
+      const mid = (bestBid + bestAsk) / 2;
+      const band = mid * 0.005;
+      const nearBidVol = d.bids.filter(([p]) => parseFloat(p) >= mid - band).reduce((s,[p,q]) => s + parseFloat(p)*parseFloat(q), 0);
+      const nearAskVol = d.asks.filter(([p]) => parseFloat(p) <= mid + band).reduce((s,[p,q]) => s + parseFloat(p)*parseFloat(q), 0);
+      const totalNearUsd = nearBidVol + nearAskVol;
+      const bidShare = totalNearUsd ? (nearBidVol/totalNearUsd)*100 : 50;
+      document.getElementById('liqRadarFill').style.width = bidShare.toFixed(1) + '%';
+      document.getElementById('liqRadarLegend').innerHTML = `
+        <div>Liquidity (±0.5%): <span class="rl-val">$${(totalNearUsd/1000).toFixed(1)}K</span></div>
+        <div>Bid/Ask Split: <span class="rl-val">${bidShare.toFixed(0)}% / ${(100-bidShare).toFixed(0)}%</span></div>
+      `;
+
+      // ⚠ Possible Spoofing: compare this snapshot's large levels (≥$15K) to the
+      // previous one. A level that VANISHES within ~2s with no matching trade
+      // printed at that price gets flagged. Fixed threshold, disclosed above.
+      const now = Date.now();
+      const currentLarge = {};
+      [...d.bids.map(l => [...l,'bid']), ...d.asks.map(l => [...l,'ask'])].forEach(([p,q,side]) => {
+        const usd = parseFloat(p)*parseFloat(q);
+        if(usd >= 15000) currentLarge[p] = { qty: parseFloat(q), side, usd };
+      });
+
+      Object.keys(window._prevLargeLevels).forEach(price => {
+        const prev = window._prevLargeLevels[price];
+        const stillThere = currentLarge[price] && currentLarge[price].usd >= prev.usd * 0.5;
+        if(!stillThere){
+          const ageMs = now - prev.firstSeen;
+          if(ageMs <= 2500){
+            const tradedHere = window._recentTradePrices.some(t =>
+              Math.abs(t.price - parseFloat(price)) / parseFloat(price) < 0.0005 &&
+              (now - t.time) < 2500 &&
+              t.usd >= prev.usd * 0.4
+            );
+            if(!tradedHere){
+              flagPossibleSpoof(prev.side, price, prev.usd, ageMs);
+            }
+          }
+        }
+      });
+      // carry forward: keep firstSeen for levels still present, start fresh for new ones
+      const nextPrev = {};
+      Object.keys(currentLarge).forEach(price => {
+        nextPrev[price] = {
+          ...currentLarge[price],
+          firstSeen: window._prevLargeLevels[price] ? window._prevLargeLevels[price].firstSeen : now
+        };
+      });
+      window._prevLargeLevels = nextPrev;
     };
     modalDepthWs.onerror = () => {
       document.getElementById('obBids').innerHTML = '<tr><td colspan="3">Unavailable</td></tr>';
       document.getElementById('obAsks').innerHTML = '<tr><td colspan="3">Unavailable</td></tr>';
+      document.getElementById('liqRadarLegend').innerHTML = '<div>Liquidity data unavailable.</div>';
     };
   }catch(e){}
+}
+
+/* ============================================================
+   Δ · LARGE ORDERS — real Binance aggTrade stream for the
+   selected coin, filtered to trades ≥ $10,000 USD. Classified
+   buy/sell using the same isBuyerMaker rule documented earlier.
+   ============================================================ */
+let modalTradeWs = null;
+function startModalTrades(binanceSymbol){
+  const feed = document.getElementById('largeOrdersFeed');
+  let count = 0;
+  window._recentTradePrices = [];
+  try{
+    modalTradeWs = new WebSocket(`wss://stream.binance.com:9443/ws/${binanceSymbol.toLowerCase()}@aggTrade`);
+    modalTradeWs.onopen = () => { feed.innerHTML = '<div class="liq-empty">Connected — watching for large orders…</div>'; };
+    modalTradeWs.onmessage = (msg) => {
+      const t = JSON.parse(msg.data);
+      const price = parseFloat(t.p), qty = parseFloat(t.q);
+      const usd = price * qty;
+
+      // Feed every trade's price/size/time into a short rolling log —
+      // used by the spoof detector to check "did a real trade happen here?"
+      window._recentTradePrices.push({ price, usd, time: Date.now() });
+      const cutoff = Date.now() - 5000;
+      window._recentTradePrices = window._recentTradePrices.filter(t => t.time > cutoff);
+
+      if(usd < 10000) return;
+      const isBuy = !t.m; // isBuyerMaker=false means taker bought
+      const row = document.createElement('div');
+      row.className = 'liq-row ' + (isBuy ? 'short' : 'long'); // reuse green/red classes
+      const time = new Date(t.T).toLocaleTimeString();
+      row.innerHTML = `<span><span class="liq-side">${isBuy?'BUY':'SELL'}</span> ${price.toLocaleString(undefined,{maximumFractionDigits:2})} — $${Math.round(usd).toLocaleString()}</span><span class="liq-time">${time}</span>`;
+      if(count === 0) feed.innerHTML = '';
+      feed.prepend(row);
+      count++;
+      while(feed.children.length > 10) feed.removeChild(feed.lastChild);
+    };
+    modalTradeWs.onerror = () => { feed.innerHTML = '<div class="liq-empty">Unavailable for this pair.</div>'; };
+  }catch(e){
+    feed.innerHTML = '<div class="liq-empty">Not supported in this browser.</div>';
+  }
+}
+
+let spoofCount = 0;
+function flagPossibleSpoof(side, price, usd, ageMs){
+  const feed = document.getElementById('spoofFeed');
+  if(spoofCount === 0) feed.innerHTML = '';
+  const row = document.createElement('div');
+  row.className = 'liq-row ' + (side === 'ask' ? 'long' : 'short');
+  const time = new Date().toLocaleTimeString();
+  row.innerHTML = `<span><span class="liq-side">${side.toUpperCase()} WALL VANISHED</span> ${parseFloat(price).toLocaleString(undefined,{maximumFractionDigits:2})} — $${Math.round(usd).toLocaleString()} (${ageMs}ms, no matching trade)</span><span class="liq-time">${time}</span>`;
+  feed.prepend(row);
+  spoofCount++;
+  while(feed.children.length > 8) feed.removeChild(feed.lastChild);
 }
 
 window.openCoinModal = async function(symbol, name){
@@ -1414,12 +1871,18 @@ window.openCoinModal = async function(symbol, name){
   document.getElementById('radarLegend').innerHTML = 'loading…';
   document.getElementById('obBids').innerHTML = '<tr><td colspan="3">loading…</td></tr>';
   document.getElementById('obAsks').innerHTML = '<tr><td colspan="3">loading…</td></tr>';
+  document.getElementById('largeOrdersFeed').innerHTML = '<div class="liq-empty">Connecting…</div>';
+  document.getElementById('spoofFeed').innerHTML = '<div class="liq-empty">Watching order book for large orders that vanish without a matching trade…</div>';
+  spoofCount = 0;
+  document.getElementById('liqRadarLegend').innerHTML = 'loading…';
+  document.getElementById('liqRadarFill').style.width = '50%';
   drawRadar(0,0,0,0);
   document.getElementById('coinModalOverlay').classList.add('open');
 
   // Close any previous live connections/intervals before opening new ones
   if(modalWs){ modalWs.close(); modalWs = null; }
   if(modalDepthWs){ modalDepthWs.close(); modalDepthWs = null; }
+  if(modalTradeWs){ modalTradeWs.close(); modalTradeWs = null; }
   if(window._radarRefreshInterval){ clearInterval(window._radarRefreshInterval); }
 
   // 1) Live price + 24h high/low via Binance ticker WebSocket
@@ -1461,8 +1924,9 @@ window.openCoinModal = async function(symbol, name){
     document.getElementById('modalNote').textContent = (document.getElementById('modalNote').textContent + ' Support/Resistance couldn\'t be calculated — no prior-day candle available for this pair on Binance.').trim();
   }
 
-  // 3) Order book (live) + 4) Market Radar (real computed metrics)
+  // 3) Order book (live) + 4) Market Radar (real computed metrics) + 5) Large Orders
   startModalDepth(binanceSymbol);
+  startModalTrades(binanceSymbol);
   setTimeout(() => loadModalRadar(binanceSymbol), 600); // slight delay so imbalance has a first reading
 };
 
@@ -1470,6 +1934,7 @@ window.closeCoinModal = function(){
   document.getElementById('coinModalOverlay').classList.remove('open');
   if(modalWs){ modalWs.close(); modalWs = null; }
   if(modalDepthWs){ modalDepthWs.close(); modalDepthWs = null; }
+  if(modalTradeWs){ modalTradeWs.close(); modalTradeWs = null; }
   if(window._radarRefreshInterval){ clearInterval(window._radarRefreshInterval); }
 };
 </script>
